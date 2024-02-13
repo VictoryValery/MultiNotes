@@ -15,4 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "MultiNotes"
 include(":app")
- 
+include(":auth")
+include(":dashboard")
+include(":note")
