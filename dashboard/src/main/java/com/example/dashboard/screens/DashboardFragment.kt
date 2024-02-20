@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,8 +28,11 @@ class DashboardFragment() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (view as ComposeView).setContent {
-            DashboardScreen(state = viewModel.state.value)
+            val state by viewModel.state.collectAsState()
+            DashboardScreen(
+                state = state,
+                onDelete = viewModel::deleteNote
+            )
         }
     }
-
 }

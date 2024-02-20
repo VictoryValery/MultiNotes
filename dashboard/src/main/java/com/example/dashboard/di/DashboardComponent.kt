@@ -7,5 +7,8 @@ class DashboardComponent(
 ) {
     companion object : ComponentHolder<DashboardComponent>()
 
-    internal val dashboardVmFactory = DashboardVmFactory(dashboardDependencies.repository)
+    internal val dashboardVmFactory = DashboardVmFactory(
+        notesRepository = dashboardDependencies.notesRepository,
+        nameRepository = dashboardDependencies.nameRepository
+    )
 }

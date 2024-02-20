@@ -1,12 +1,25 @@
 package com.example.dashboard.di
 
-import com.example.dashboard.data.DashboardRepositoryImpl
-import com.example.dashboard.domain.DashboardRepository
+import com.example.domain.repositories.NameRepository
+import com.example.domain.repositories.NotesRepository
+
 
 interface DashboardDependencies {
-    val repository: DashboardRepository
+    val notesRepository: NotesRepository
+    val nameRepository: NameRepository
+
+    companion object {
+        fun init(
+            notesRepository: NotesRepository,
+            nameRepository: NameRepository
+        ): DashboardDependencies = DashboardDependenciesImpl(
+            notesRepository = notesRepository,
+            nameRepository = nameRepository
+        )
+    }
 }
 
-private class DashboardDependenciesImpl() : DashboardDependencies {
-    override val repository: DashboardRepository = DashboardRepositoryImpl()
-}
+private class DashboardDependenciesImpl(
+    override val notesRepository: NotesRepository,
+    override val nameRepository: NameRepository
+) : DashboardDependencies
