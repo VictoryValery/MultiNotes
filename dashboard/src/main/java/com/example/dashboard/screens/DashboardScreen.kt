@@ -1,6 +1,7 @@
 package com.example.dashboard.screens
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -15,25 +16,29 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.example.common.domain.models.Note
 import com.example.dashboard.screens.presentation.DashboardState
 import com.example.dashboard.screens.ui.NoteItem
+
+private const val EMPTY_DASHBOARD = "Нет заметок"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
-    state: DashboardState
+    state: DashboardState,
+    onDelete: (Note) -> Unit
 ) {
-    val scope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
         modifier = Modifier
@@ -65,7 +70,7 @@ fun DashboardScreen(
             FloatingActionButton(
                 modifier = Modifier
                     .size(48.dp),
-                onClick = {},
+                onClick = { /* new note screen () */ },
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -74,20 +79,36 @@ fun DashboardScreen(
             }
         },
     ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentPadding = it,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            items(state.notes) { note ->
-                NoteItem(
-                    note = note,
-                    onDeleteClick = { /*TODO*/ },
-                    onNoteClick = { /*TODO*/ }
+        if (state.notes.isEmpty()) {
+            Column(
+                modifier = Modifier
+                    .padding(it)
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = EMPTY_DASHBOARD,
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
-                if (state.notes.last().id == note.id)
-                    Spacer(modifier = Modifier.height(72.dp))
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentPadding = it,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(state.notes) { note ->
+                    NoteItem(
+                        note = note,
+                        onDeleteClick = { onDelete(note) },
+                        onNoteClick = { /* open note with id (id) */ }
+                    )
+                    if (state.notes.last().id == note.id)
+                        Spacer(modifier = Modifier.height(72.dp))
+                }
             }
         }
     }

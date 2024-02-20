@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.common.domain.Note
+import com.example.common.domain.models.Note
 import com.example.dashboard.screens.DashboardScreen
 import com.example.dashboard.screens.presentation.DashboardState
 import com.example.multinotes.ui.theme.MultiNotesTheme
@@ -20,14 +20,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MultiNotesTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     DashboardScreen(
-                        DashboardState(
+                        state = DashboardState(
                             userName = "Victory",
+//                            notes = emptyList()
                             notes = listOf(
                                 Note(
                                     id = 1,
@@ -55,7 +55,8 @@ class MainActivity : ComponentActivity() {
                                     content = "Long content for my note double whisky and repeat please"
                                 )
                             )
-                        )
+                        ),
+                        onDelete = {}
                     )
                 }
             }

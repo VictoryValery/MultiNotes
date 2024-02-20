@@ -23,13 +23,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.common.domain.Note
+import com.example.common.domain.models.Note
 
 @Composable
 fun NoteItem(
     note: Note,
     modifier: Modifier = Modifier,
-    onDeleteClick: () -> Unit,
+    onDeleteClick: (Note) -> Unit,
     onNoteClick: () -> Unit
 ) {
     Box(
@@ -62,7 +62,7 @@ fun NoteItem(
                 overflow = TextOverflow.Ellipsis
             )
             IconButton(
-                onClick = onDeleteClick,
+                onClick = { onDeleteClick(note) },
                 modifier = Modifier
                     .align(alignment = Alignment.End)
             ) {
