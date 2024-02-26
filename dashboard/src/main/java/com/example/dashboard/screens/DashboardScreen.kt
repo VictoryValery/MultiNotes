@@ -37,7 +37,10 @@ private const val EMPTY_DASHBOARD = "Нет заметок"
 @Composable
 fun DashboardScreen(
     state: DashboardState,
-    onDelete: (Note) -> Unit
+    onDelete: (Note) -> Unit,
+    newNote: () -> Unit,
+    existingNote: (id: Int) -> Unit,
+    navigateBack: () -> Unit,
 ) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     Scaffold(
@@ -56,7 +59,7 @@ fun DashboardScreen(
                     }
                 },
                 navigationIcon = {
-                    IconButton(onClick = { /* back() */ }) {
+                    IconButton(onClick = { navigateBack() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Leave app"
@@ -70,7 +73,7 @@ fun DashboardScreen(
             FloatingActionButton(
                 modifier = Modifier
                     .size(48.dp),
-                onClick = { /* new note screen () */ },
+                onClick = { newNote() },
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -104,7 +107,7 @@ fun DashboardScreen(
                     NoteItem(
                         note = note,
                         onDeleteClick = { onDelete(note) },
-                        onNoteClick = { /* open note with id (id) */ }
+                        onNoteClick = { existingNote.invoke(note.id ?: 0) }
                     )
                     if (state.notes.last().id == note.id)
                         Spacer(modifier = Modifier.height(72.dp))

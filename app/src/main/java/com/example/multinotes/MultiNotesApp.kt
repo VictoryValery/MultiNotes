@@ -10,7 +10,10 @@ import com.example.data.repository.NotesRepositoryImpl
 import com.example.data.storage.name.NameStorageImpl
 import com.example.data.storage.notes.NotesDatabase
 import com.example.data.storage.notes.NotesDatabase.Companion.DATABASE_NAME
+import com.example.multinotes.navigation.DashboardNavigationImpl
+import com.example.multinotes.navigation.NoteNavigationImpl
 import com.example.note.di.NoteComponent
+import com.example.note.di.NoteDependencies
 
 class MultiNotesApp : Application() {
     override fun onCreate() {
@@ -19,20 +22,29 @@ class MultiNotesApp : Application() {
     }
 
     private fun init() {
+        val notesRepository = NotesRepositoryImpl(
+            provideNoteDatabase(this).noteDao,
+        )
         NoteComponent.set(
-            provider = { NoteComponent(this) }
+            provider = {
+                NoteComponent(
+                    noteDependencies = NoteDependencies.init(
+                        notesRepository = notesRepository
+                    ),
+                    noteNavigation = NoteNavigationImpl()
+                )
+            }
         )
         DashboardComponent.set(
             provider = {
                 DashboardComponent(
-                    DashboardDependencies.init(
-                        notesRepository = NotesRepositoryImpl(
-                            provideNoteDatabase(this).noteDao,
-                        ),
+                    dashboardDependencies = DashboardDependencies.init(
+                        notesRepository = notesRepository,
                         nameRepository = NameRepositoryImpl(
                             NameStorageImpl(this)
                         )
-                    )
+                    ),
+                    dashboardNavigation = DashboardNavigationImpl()
                 )
             }
         )

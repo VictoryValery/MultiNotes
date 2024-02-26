@@ -21,47 +21,7 @@ class DashboardViewModel(
     val state = _state.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            addNotes()
-        }
         getInitialInfo()
-    }
-
-    private suspend fun addNotes() {
-        val initial = DashboardState(
-            userName = "Victory",
-            notes = listOf(
-                Note(
-                    id = 1,
-                    title = "1long title for my note",
-                    content = "Long content for my note double whisky and repeat please"
-                ),
-                Note(
-                    id = 12,
-                    title = "2long title for my note",
-                    content = "Long content for my note double whisky and repeat please"
-                ),
-                Note(
-                    id = 13,
-                    title = "3long title for my note",
-                    content = "Long content for my note double whisky and repeat please"
-                ),
-                Note(
-                    id = 14,
-                    title = "4long title for my note",
-                    content = "Long content for my note double whisky and repeat please"
-                ),
-                Note(
-                    id = 15,
-                    title = "5long title for my note",
-                    content = "Long content for my note double whisky and repeat please"
-                )
-            )
-        )
-        initial.notes.forEach {
-            notesRepository.insertNote(it)
-        }
-
     }
 
     fun deleteNote(note: Note) {

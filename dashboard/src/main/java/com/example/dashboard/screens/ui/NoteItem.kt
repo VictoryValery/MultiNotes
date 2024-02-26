@@ -44,6 +44,7 @@ fun NoteItem(
     ) {
         Column(
             modifier = Modifier
+                .fillMaxWidth()
                 .padding(12.dp)
         ) {
             Text(
@@ -58,7 +59,7 @@ fun NoteItem(
                 text = note.content,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 10,
+                maxLines = 5,
                 overflow = TextOverflow.Ellipsis
             )
             IconButton(
