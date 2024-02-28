@@ -1,12 +1,14 @@
 package com.example.note.di
 
-import android.content.Context
 import com.example.core.di.ComponentHolder
+import com.example.note.navigation.NoteNavigation
 
 class NoteComponent(
-    val context : Context
+    noteDependencies: NoteDependencies,
+    val noteNavigation: NoteNavigation
 ) {
-
     companion object : ComponentHolder<NoteComponent>()
+
+    internal val noteVmFactory = NoteVmFactory(noteDependencies.notesRepository)
 
 }

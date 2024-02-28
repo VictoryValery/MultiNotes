@@ -5,13 +5,13 @@ import com.example.data.storage.name.NameStorage
 import com.example.domain.repositories.NameRepository
 
 class NameRepositoryImpl(
-    nameStorage: NameStorage
+    private val nameStorage: NameStorage
 ) : NameRepository {
     override fun getName(): UserName {
-        TODO("Not yet implemented")
+        return nameStorage.getName()
     }
 
     override fun setName(userName: UserName) {
-        TODO("Not yet implemented")
+        nameStorage.setName(userName)
     }
 }

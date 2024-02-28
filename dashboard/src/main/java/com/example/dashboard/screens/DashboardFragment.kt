@@ -16,6 +16,7 @@ class DashboardFragment() : Fragment() {
     private val viewModel: DashboardViewModel by viewModels {
         DashboardComponent.get().dashboardVmFactory
     }
+    private val navigation = DashboardComponent.get().dashboardNavigation
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,7 +32,10 @@ class DashboardFragment() : Fragment() {
             val state by viewModel.state.collectAsState()
             DashboardScreen(
                 state = state,
-                onDelete = viewModel::deleteNote
+                onDelete = viewModel::deleteNote,
+                newNote = { navigation.newNoteScreen(this) },
+                existingNote = { id -> navigation.existingNoteScreen(this, id) },
+                navigateBack = { navigation.back(this) }
             )
         }
     }
