@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
-class DashboardViewModel(
+internal class DashboardViewModel(
     private val notesRepository: NotesRepository,
     private val nameRepository: NameRepository
 ) : ViewModel() {
@@ -33,7 +33,7 @@ class DashboardViewModel(
     private fun getInitialInfo() {
         val userName = nameRepository.getName()
         _state.value = _state.value.copy(
-            userName = userName.name
+            userName = userName
         )
         notesRepository.getNotes().onEach { notesList ->
             _state.value = _state.value.copy(

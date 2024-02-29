@@ -1,8 +1,8 @@
 package com.example.domain.repositories
 
-import com.example.common.domain.models.UserName
+import com.example.common.domain.models.User
 
 interface NameRepository {
-    fun getName(): UserName
-    fun setName(userName: UserName)
+    fun getName(): String
+    fun setUser(user: User)
 }
