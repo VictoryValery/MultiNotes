@@ -35,7 +35,7 @@ private const val EMPTY_DASHBOARD = "Нет заметок"
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashboardScreen(
+internal fun DashboardScreen(
     state: DashboardState,
     onDelete: (Note) -> Unit,
     newNote: () -> Unit,

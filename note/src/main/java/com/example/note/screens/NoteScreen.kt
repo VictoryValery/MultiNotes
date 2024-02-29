@@ -31,7 +31,7 @@ import com.example.note.screens.components.TextField
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NoteScreen(
+internal fun NoteScreen(
     state: NoteState,
     viewModel: NoteViewModel,
     navigateBack: () -> Unit,
@@ -89,7 +89,10 @@ fun NoteScreen(
                         textStyle = MaterialTheme.typography.bodyLarge
                     )
                     IconButton(
-                        onClick = { viewModel.saveNote() },
+                        onClick = {
+                            if (viewModel.saveNote())
+                                navigateBack()
+                        },
                         modifier = Modifier
                             .align(alignment = Alignment.End)
                     ) {

@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class NoteViewModel(
-    val notesRepository: NotesRepository
+internal class NoteViewModel(
+    private val notesRepository: NotesRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(NoteState())
@@ -40,18 +40,21 @@ class NoteViewModel(
         )
     }
 
-    fun saveNote() {
-        viewModelScope.launch {
-            notesRepository.insertNote(
-                Note(
-                    id = state.value.id,
-                    title = state.value.title,
-                    content = state.value.content
+    fun saveNote(): Boolean {
+        runCatching {
+            viewModelScope.launch {
+
+                notesRepository.insertNote(
+                    Note(
+                        id = state.value.id,
+                        title = state.value.title,
+                        content = state.value.content
+                    )
                 )
-            )
-        }
-
+            }
+        }.fold(
+            onSuccess = { return true },
+            onFailure = { return false }
+        )
     }
-
-
 }

@@ -11,7 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.dashboard.di.DashboardComponent
 
-class DashboardFragment() : Fragment() {
+class DashboardFragment : Fragment() {
+    companion object {
+        fun newInstance(): DashboardFragment = DashboardFragment()
+    }
 
     private val viewModel: DashboardViewModel by viewModels {
         DashboardComponent.get().dashboardVmFactory
