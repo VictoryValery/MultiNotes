@@ -3,6 +3,8 @@ package com.example.multinotes
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import com.example.auth.di.AuthComponent
+import com.example.auth.di.AuthDependencies
 import com.example.dashboard.di.DashboardComponent
 import com.example.dashboard.di.DashboardDependencies
 import com.example.data.repository.NameRepositoryImpl
@@ -10,6 +12,7 @@ import com.example.data.repository.NotesRepositoryImpl
 import com.example.data.storage.name.NameStorageImpl
 import com.example.data.storage.notes.NotesDatabase
 import com.example.data.storage.notes.NotesDatabase.Companion.DATABASE_NAME
+import com.example.multinotes.navigation.AuthNavigationImpl
 import com.example.multinotes.navigation.DashboardNavigationImpl
 import com.example.multinotes.navigation.NoteNavigationImpl
 import com.example.note.di.NoteComponent
@@ -25,13 +28,16 @@ class MultiNotesApp : Application() {
         val notesRepository = NotesRepositoryImpl(
             provideNoteDatabase(this).noteDao,
         )
-        NoteComponent.set(
+        val nameRepository = NameRepositoryImpl(
+            NameStorageImpl(this)
+        )
+        AuthComponent.set(
             provider = {
-                NoteComponent(
-                    noteDependencies = NoteDependencies.init(
-                        notesRepository = notesRepository
+                AuthComponent(
+                    authDependencies = AuthDependencies.init(
+                        nameRepository = nameRepository
                     ),
-                    noteNavigation = NoteNavigationImpl()
+                    authNavigation = AuthNavigationImpl()
                 )
             }
         )
@@ -40,11 +46,19 @@ class MultiNotesApp : Application() {
                 DashboardComponent(
                     dashboardDependencies = DashboardDependencies.init(
                         notesRepository = notesRepository,
-                        nameRepository = NameRepositoryImpl(
-                            NameStorageImpl(this)
-                        )
+                        nameRepository = nameRepository
                     ),
                     dashboardNavigation = DashboardNavigationImpl()
+                )
+            }
+        )
+        NoteComponent.set(
+            provider = {
+                NoteComponent(
+                    noteDependencies = NoteDependencies.init(
+                        notesRepository = notesRepository
+                    ),
+                    noteNavigation = NoteNavigationImpl()
                 )
             }
         )

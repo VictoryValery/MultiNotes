@@ -27,7 +27,6 @@ class NoteFragment : Fragment() {
                     putInt(NOTE_ID, id)
                 }
             }
-
         }
     }
 
