@@ -1,11 +1,10 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
 }
 
 android {
-    namespace = "com.example.data"
+    namespace = "com.example.common_ui"
     compileSdk = 34
 
     defaultConfig {
@@ -34,17 +33,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":domain"))
-    implementation(project(":common"))
-    implementation(project(":common_ui"))
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    implementation("com.google.android.material:material:1.11.0")
 
-    // Room
-    implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose")
 }

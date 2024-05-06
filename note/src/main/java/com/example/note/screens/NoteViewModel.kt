@@ -2,7 +2,7 @@ package com.example.note.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.common.domain.models.Note
+import com.example.common_ui.domain.ui_models.UiNote
 import com.example.domain.repositories.NotesRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -43,9 +43,8 @@ internal class NoteViewModel(
     fun saveNote(): Boolean {
         runCatching {
             viewModelScope.launch {
-
                 notesRepository.insertNote(
-                    Note(
+                    UiNote(
                         id = state.value.id,
                         title = state.value.title,
                         content = state.value.content

@@ -1,5 +1,8 @@
 package com.example.note.screens
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 internal data class NoteState(
     val id: Int? = null,
     val title: String = "",

@@ -2,7 +2,7 @@ package com.example.dashboard.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.common.domain.models.Note
+import com.example.common_ui.domain.ui_models.UiNote
 import com.example.dashboard.screens.presentation.DashboardState
 import com.example.domain.repositories.NameRepository
 import com.example.domain.repositories.NotesRepository
@@ -24,7 +24,7 @@ internal class DashboardViewModel(
         getInitialInfo()
     }
 
-    fun deleteNote(note: Note) {
+    fun deleteNote(note: UiNote) {
         viewModelScope.launch {
             notesRepository.deleteNote(note)
         }
