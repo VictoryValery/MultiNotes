@@ -48,7 +48,13 @@ internal fun AuthScreen(
             textStyle = TextStyle(fontSize = 16.sp),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Next
-            )
+            ),
+            isError = state.loginError != null,
+            supportingText = {
+                state.loginError?.let {
+                    Text(it)
+                }
+            }
         )
         TextField(
             value = state.password ?: "",
@@ -63,7 +69,13 @@ internal fun AuthScreen(
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done
-            )
+            ),
+            isError = state.passwordError != null,
+            supportingText = {
+                state.passwordError?.let {
+                    Text(it)
+                }
+            }
         )
         Button(
             onClick = { onLoginClick() },
@@ -71,10 +83,6 @@ internal fun AuthScreen(
                 .fillMaxWidth()
                 .height(64.dp)
                 .padding(top = 16.dp),
-            enabled = state.userName?.isNotBlank() == true &&
-                    state.password?.isNotBlank() == true &&
-                    !state.userName.contains(" ") &&
-                    !state.password.contains(" ")
         ) {
             Text("Log in")
         }
