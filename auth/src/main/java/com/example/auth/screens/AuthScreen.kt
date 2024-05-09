@@ -11,11 +11,13 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.auth.screens.presentation.AuthState
@@ -76,5 +78,28 @@ internal fun AuthScreen(
         ) {
             Text("Log in")
         }
+    }
+}
+
+@Preview
+@Composable
+fun AuthScreenPreview() {
+    val authState = remember {
+        AuthState(
+            userName = "userName",
+            password = "password"
+        )
+    }
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        AuthScreen(
+            state = authState,
+            onUserNameChange = {},
+            onPasswordChange = {},
+            onLoginClick = {}
+        )
     }
 }
