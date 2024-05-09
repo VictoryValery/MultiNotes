@@ -35,8 +35,9 @@ class AuthFragment : Fragment() {
                 onUserNameChange = { name -> viewModel.onUserNameChange(name) },
                 onPasswordChange = { password -> viewModel.onPasswordChange(password) },
                 onLoginClick = {
-                    viewModel.onLoginClick()
-                    navigation.dashboard(this)
+                    if (viewModel.loginEnabled()) {
+                        navigation.dashboard(this)
+                    }
                 }
             )
         }
