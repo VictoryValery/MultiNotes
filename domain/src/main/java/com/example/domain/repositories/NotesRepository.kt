@@ -1,13 +1,13 @@
 package com.example.domain.repositories
 
-import com.example.common.domain.models.Note
+import com.example.common_ui.domain.ui_models.UiNote
 import kotlinx.coroutines.flow.Flow
 
 interface NotesRepository {
-    fun getNotes(): Flow<List<Note>>
-    suspend fun getNoteById(id: Int): Note?
+    fun getNotes(): Flow<List<UiNote>>
+    suspend fun getNoteById(id: Int): UiNote?
 
-    suspend fun insertNote(note: Note)
+    suspend fun insertNote(note: UiNote)
 
-    suspend fun deleteNote(note: Note)
+    suspend fun deleteNote(note: UiNote)
 }

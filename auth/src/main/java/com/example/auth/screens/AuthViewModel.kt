@@ -2,7 +2,7 @@ package com.example.auth.screens
 
 import androidx.lifecycle.ViewModel
 import com.example.auth.screens.presentation.AuthState
-import com.example.common.domain.models.User
+import com.example.common_ui.domain.ui_models.UiUser
 import com.example.domain.repositories.NameRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,7 +30,7 @@ internal class AuthViewModel(
             !password.contains(" ")
         ) {
             nameRepository.setUser(
-                User(name = userName, password = password)
+                UiUser(name = userName, password = password)
             )
         }
     }

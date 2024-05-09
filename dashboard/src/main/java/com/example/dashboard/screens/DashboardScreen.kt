@@ -27,7 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.common.domain.models.Note
+import com.example.common_ui.domain.ui_models.UiNote
 import com.example.dashboard.screens.presentation.DashboardState
 import com.example.dashboard.screens.ui.NoteItem
 
@@ -37,7 +37,7 @@ private const val EMPTY_DASHBOARD = "Нет заметок"
 @Composable
 internal fun DashboardScreen(
     state: DashboardState,
-    onDelete: (Note) -> Unit,
+    onDelete: (UiNote) -> Unit,
     newNote: () -> Unit,
     existingNote: (id: Int) -> Unit,
     navigateBack: () -> Unit,

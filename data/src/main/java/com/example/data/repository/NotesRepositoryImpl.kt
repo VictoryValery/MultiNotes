@@ -1,27 +1,32 @@
 package com.example.data.repository
 
-import com.example.common.domain.models.Note
+import com.example.common.domain.models.toNote
+import com.example.common.domain.models.toUiNote
+import com.example.common_ui.domain.ui_models.UiNote
 import com.example.data.storage.notes.NotesDao
 import com.example.domain.repositories.NotesRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class NotesRepositoryImpl(
     private val dao: NotesDao
 ) : NotesRepository {
 
-    override fun getNotes(): Flow<List<Note>> {
-        return dao.getNotes()
+    override fun getNotes(): Flow<List<UiNote>> {
+        return dao.getNotes().map { notes ->
+            notes.map { it.toUiNote() }
+        }
     }
 
-    override suspend fun getNoteById(id: Int): Note? {
-        return dao.getNoteById(id)
+    override suspend fun getNoteById(id: Int): UiNote? {
+        return dao.getNoteById(id)?.toUiNote()
     }
 
-    override suspend fun insertNote(note: Note) {
-        dao.insertNote(note)
+    override suspend fun insertNote(note: UiNote) {
+        dao.insertNote(note.toNote())
     }
 
-    override suspend fun deleteNote(note: Note) {
-        dao.deleteNote(note)
+    override suspend fun deleteNote(note: UiNote) {
+        dao.deleteNote(note.toNote())
     }
 }

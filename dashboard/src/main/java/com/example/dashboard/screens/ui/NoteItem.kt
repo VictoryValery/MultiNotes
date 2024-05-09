@@ -23,13 +23,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.common.domain.models.Note
+import com.example.common_ui.domain.ui_models.UiNote
 
 @Composable
 fun NoteItem(
-    note: Note,
+    note: UiNote,
     modifier: Modifier = Modifier,
-    onDeleteClick: (Note) -> Unit,
+    onDeleteClick: (UiNote) -> Unit,
     onNoteClick: () -> Unit
 ) {
     Box(
@@ -81,7 +81,7 @@ fun NoteItem(
 @Composable
 fun PreviewNoteItem() {
     NoteItem(
-        note = Note(
+        note = UiNote(
             id = 1,
             title = "long title for my note",
             content = "Long content for my note double whisky and repeat please"

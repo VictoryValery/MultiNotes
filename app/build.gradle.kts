@@ -58,6 +58,7 @@ dependencies {
     implementation(project(":note"))
     implementation(project(":core"))
     implementation(project(":common"))
+    implementation(project(":common_ui"))
     implementation(project(":domain"))
     implementation(project(":data"))
 
