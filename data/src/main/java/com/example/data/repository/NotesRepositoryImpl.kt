@@ -22,8 +22,22 @@ class NotesRepositoryImpl(
         return dao.getNoteById(id)?.toUiNote()
     }
 
-    override suspend fun insertNote(note: UiNote) {
-        dao.insertNote(note.toNote())
+    override suspend fun insertNote(note: UiNote): Boolean {
+        return runCatching {
+            dao.noteWithTitle(note.title)
+        }.fold(
+            onSuccess = {
+                if (it != null) {
+                    false
+                } else {
+                    dao.insertNote(note.toNote())
+                    true
+                }
+            },
+            onFailure = {
+                throw IllegalArgumentException(it)
+            }
+        )
     }
 
     override suspend fun deleteNote(note: UiNote) {

@@ -7,7 +7,7 @@ interface NotesRepository {
     fun getNotes(): Flow<List<UiNote>>
     suspend fun getNoteById(id: Int): UiNote?
 
-    suspend fun insertNote(note: UiNote)
+    suspend fun insertNote(note: UiNote): Boolean
 
     suspend fun deleteNote(note: UiNote)
 }
