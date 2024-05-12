@@ -40,9 +40,10 @@ internal class NoteViewModel(
         )
     }
 
-    fun saveNote(): Boolean {
-        runCatching {
-            viewModelScope.launch {
+    fun saveNote() {
+        _state.value = _state.value.copy(titleIsUnique = null)
+        viewModelScope.launch {
+            runCatching {
                 notesRepository.insertNote(
                     UiNote(
                         id = state.value.id,
@@ -50,10 +51,14 @@ internal class NoteViewModel(
                         content = state.value.content
                     )
                 )
-            }
-        }.fold(
-            onSuccess = { return true },
-            onFailure = { return false }
-        )
+            }.fold(
+                onSuccess = {
+                    _state.value = _state.value.copy(titleIsUnique = it)
+                },
+                onFailure = {
+                    _state.value = _state.value.copy(titleIsUnique = false)
+                }
+            )
+        }
     }
 }
